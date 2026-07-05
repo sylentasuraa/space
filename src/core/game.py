@@ -1,7 +1,7 @@
+import pygame
+
 from entities.rocket import Rocket
 from entities.ground import Ground
-
-import pygame
 
 from core.config import (
     WIDTH,
@@ -17,8 +17,13 @@ class Game:
     def __init__(self):
         pygame.init()
 
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("Orbital Simulator")
+        self.screen = pygame.display.set_mode(
+            (WIDTH, HEIGHT)
+        )
+
+        pygame.display.set_caption(
+            "Orbital Simulator"
+        )
 
         self.clock = pygame.time.Clock()
         self.running = True
@@ -28,12 +33,17 @@ class Game:
             GROUND_COLOR,
         )
 
-        rocket_x = WIDTH / 2
-        rocket_y = HEIGHT - GROUND_HEIGHT
+        rocket_position = pygame.Vector2(
+            WIDTH / 2,
+            HEIGHT - GROUND_HEIGHT,
+        )
 
         self.rocket = Rocket(
-            rocket_x,
-            rocket_y,
+            rocket_position,
+        )
+
+        self.rocket.apply_force(
+            pygame.Vector2(1000, 0)
         )
 
     def run(self):
@@ -52,8 +62,7 @@ class Game:
                 self.running = False
 
     def update(self, dt: float):
-        # Physics and movement will go here later
-        pass
+        self.rocket.integrate(dt)
 
     def render(self):
         self.screen.fill(BACKGROUND_COLOR)
@@ -64,6 +73,8 @@ class Game:
             HEIGHT,
         )
 
-        self.rocket.draw(self.screen)
+        self.rocket.draw(
+            self.screen,
+        )
 
         pygame.display.flip()

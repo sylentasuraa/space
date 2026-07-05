@@ -10,7 +10,7 @@ class Ground:
         self,
         surface: pygame.Surface,
         screen_width: int,
-        screen_height: int
+        screen_height: int,
     ):
         pygame.draw.rect(
             surface,
@@ -19,6 +19,6 @@ class Ground:
                 0,
                 screen_height - self.height,
                 screen_width,
-                self.height
-            )
+                self.height,
+            ),
         )

@@ -1,10 +1,10 @@
 from entities.rocket import Rocket
 from entities.ground import Ground
-
+import pygame 
 
 class Game:
-    screen: object
-    clock: object
+    screen: pygame.Surface
+    clock: pygame.time.Clock
     running: bool
     rocket: Rocket
     ground: Ground

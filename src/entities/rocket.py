@@ -2,6 +2,9 @@ import pygame
 
 
 class Rocket:
+    NOSE_LENGTH = 30
+    FIN_SIZE = 20
+
     def __init__(self, x: float, y: float):
         self.x = x
         self.y = y
@@ -28,7 +31,7 @@ class Rocket:
         )
 
         nose_points = [
-            (self.x, self.y - self.height - 30),
+            (self.x, self.y - self.height - self.NOSE_LENGTH),
             (self.x - self.width // 2, self.y - self.height),
             (self.x + self.width // 2, self.y - self.height),
         ]
@@ -41,15 +44,24 @@ class Rocket:
 
         left_fin = [
             (self.x - self.width // 2, self.y),
-            (self.x - self.width // 2 - 20, self.y + 20),
-            (self.x - self.width // 2, self.y - 20),
+            (self.x - self.width // 2 - self.FIN_SIZE, self.y + self.FIN_SIZE),
+            (self.x - self.width // 2, self.y - self.FIN_SIZE),
         ]
 
         right_fin = [
             (self.x + self.width // 2, self.y),
-            (self.x + self.width // 2 + 20, self.y + 20),
-            (self.x + self.width // 2, self.y - 20),
+            (self.x + self.width // 2 + self.FIN_SIZE, self.y + self.FIN_SIZE),
+            (self.x + self.width // 2, self.y - self.FIN_SIZE),
         ]
 
-        pygame.draw.polygon(surface, self.fin_color, left_fin)
-        pygame.draw.polygon(surface, self.fin_color, right_fin)
+        pygame.draw.polygon(
+            surface,
+            self.fin_color,
+            left_fin,
+        )
+
+        pygame.draw.polygon(
+            surface,
+            self.fin_color,
+            right_fin,
+        )

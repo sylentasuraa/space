@@ -1,22 +1,3 @@
-"""
-Black Hole Particle Simulator
-------------------------------
-Click anywhere on screen to spawn ~100 particles at that location.
-They get pulled toward the black hole in the middle with real
-Newtonian gravity + inertia, so you get nice parabolic / slingshot /
-orbit-like paths depending on how fast/tangential they enter.
-
-Particles:
-  - live for a random 10-20 seconds, then fade out and disappear
-  - get absorbed (disappear instantly) if they fall past the event horizon
-  - are capped in total count so performance stays smooth even if you spam-click
-
-Controls:
-  - Left click: spawn ~100 particles at cursor
-  - Hold left click + drag: spawn a stream of particles
-  - R: clear all particles
-  - ESC / close window: quit
-"""
 
 import pygame
 import numpy as np

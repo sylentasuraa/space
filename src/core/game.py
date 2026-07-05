@@ -2,6 +2,11 @@ import pygame
 
 from entities.rocket import Rocket
 from entities.ground import Ground
+from entities.celestial_body import CelestialBody
+
+from physics.gravity import (
+    compute_gravity_force,
+)
 
 from core.config import (
     WIDTH,
@@ -28,22 +33,28 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
 
+        self.G = 5000
+
         self.ground = Ground(
             GROUND_HEIGHT,
             GROUND_COLOR,
         )
 
-        rocket_position = pygame.Vector2(
-            WIDTH / 2,
-            HEIGHT - GROUND_HEIGHT,
+        self.planet = CelestialBody(
+            position=pygame.Vector2(
+                WIDTH / 2,
+                HEIGHT / 2,
+            ),
+            mass=10000,
+            radius=40,
         )
 
         self.rocket = Rocket(
-            rocket_position,
-        )
-
-        self.rocket.apply_force(
-            pygame.Vector2(1000, 0)
+            position=pygame.Vector2(
+                WIDTH / 2 + 250,
+                HEIGHT / 2,
+            ),
+            mass=10,
         )
 
     def run(self):
@@ -61,20 +72,35 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
 
-    def update(self, dt: float):
+    def update(
+        self,
+        dt: float,
+    ):
+        gravity_force = (
+            compute_gravity_force(
+                self.planet,
+                self.rocket,
+                self.G,
+            )
+        )
+
+        self.rocket.apply_force(
+            gravity_force
+        )
+
         self.rocket.integrate(dt)
 
     def render(self):
-        self.screen.fill(BACKGROUND_COLOR)
+        self.screen.fill(
+            BACKGROUND_COLOR
+        )
 
-        self.ground.draw(
-            self.screen,
-            WIDTH,
-            HEIGHT,
+        self.planet.draw(
+            self.screen
         )
 
         self.rocket.draw(
-            self.screen,
+            self.screen
         )
 
         pygame.display.flip()
